@@ -2,7 +2,30 @@ import scrapy
 from scrapy import Request
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
+# from flask_sqlalchemy import SQLAlchemy
+# from flask import Flask, render_template, redirect, request
 
+
+# app = Flask(__name__)
+# UPLOAD_FOLDER = 'static/uploads'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///newsdb.db'
+# app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# db = SQLAlchemy(app)
+
+
+
+# class Reviews(db.Model):
+#     id=db.Column(db.Integer, primary_key=True)
+#     names = db.Column(db.String(250))
+#     reviewerLink = db.Column(db.String(250))
+#     reviewTitles = db.Column(db.String(250))
+#     reviewBody = db.Column(db.String(250))
+#     verifiedPurchase = db.Column(db.String(250))
+#     postDate = db.Column(db.String(250))
+#     starRating = db.Column(db.String(250))
+#     helpful = db.Column(db.String(250))
+#     nextPage = db.Column(db.String(250))
 
 class MyItem(scrapy.Item):
     names = scrapy.Field()
@@ -42,6 +65,7 @@ class ReviewspiderSpider(scrapy.Spider):
   # Scraping all the items for all the reviewers mentioned on that Page
   
         names=response.xpath('//div[@data-hook="review"]//span[@class="a-profile-name"]/text()').extract()
+        print(names)
         reviewerLink=response.xpath('//div[@data-hook="review"]//a[@class="a-profile"]/@href').extract()
         reviewTitles=response.xpath('//a[@data-hook="review-title"]/span/text()').extract()
         reviewBody=response.xpath('//span[@data-hook="review-body"]/span').xpath('normalize-space()').getall()
@@ -63,3 +87,25 @@ class ReviewspiderSpider(scrapy.Spider):
 #   # Checking if next page is not none then loop back in the same function with the next page URL.
 #             if next_page is not None:
 #                 yield response.follow("https://www.amazon.com"+next_page, callback=self.parse_page)
+
+
+#         @app.route("/",methods=["GET","POST"])
+#         def datatest():
+#             obj = Reviews.query.all()
+#             if request.method == 'POST':
+#                 objj= Reviews(
+#                     names =  response.xpath('//div[@data-hook="review"]//span[@class="a-profile-name"]/text()').extract(),
+#                     reviewerLink = response.xpath('//div[@data-hook="review"]//a[@class="a-profile"]/@href').extract(),
+#                     reviewTitles = response.xpath('//a[@data-hook="review-title"]/span/text()').extract(),
+#                     reviewBody = response.xpath('//span[@data-hook="review-body"]/span').xpath('normalize-space()').getall(),
+#                     verifiedPurchase = response.xpath('//span[@data-hook="avp-badge"]/text()').extract(),
+#                     postDate = response.xpath('//span[@data-hook="review-date"]/text()').extract(),
+#                     starRating = response.xpath('//i[@data-hook="review-star-rating"]/span[@class="a-icon-alt"]/text()').extract(),
+#                     helpful = response.xpath('//span[@class="cr-vote"]//span[@data-hook="helpful-vote-statement"]/text()').extract()
+                        
+#                 )
+#                 db.session.add(objj)
+#                 db.session.commit()
+#                 return redirect("/")
+#             return render_template("index.html", obj=obj)
+        
