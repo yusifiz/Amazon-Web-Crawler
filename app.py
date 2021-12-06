@@ -39,33 +39,33 @@ def submit():
         return redirect(url_for('scrape')) # Passing to the Scrape function
 
 
-@app.route("/scrape")
-def scrape():
-    
-    print(scrape_with_crochet(baseURL=baseURL)) # Passing that URL to our Scraping Function
-
-    time.sleep(20) # Pause the function while the scrapy spider is running
-    
-    for i in output_data:
-        for j, (key,value) in enumerate(i.items()):
-            json_object = {key : value}
-            build_direction = "LEFT_TO_RIGHT"
-            table_attributes = {"style" : "width:100%"}
-            html = convert(json_object, build_direction=build_direction, table_attributes=table_attributes)
-            print(html)
-        return html
-    return jsonify(output_data)# Returns the scraped data after being running for 20 seconds.
-  
-  
 # @app.route("/scrape")
 # def scrape():
-
-#     scrape_with_crochet(baseURL=baseURL) # Passing that URL to our Scraping Function
+    
+#     print(scrape_with_crochet(baseURL=baseURL)) # Passing that URL to our Scraping Function
 
 #     time.sleep(20) # Pause the function while the scrapy spider is running
-#     print(baseURL)
-#     print(output_data)
-#     return jsonify(output_data) # Returns the scraped data after being running for 20 seconds.
+    
+#     for i in output_data:
+#         for j, (key,value) in enumerate(i.items()):
+#             json_object = {key : value}
+#             build_direction = "LEFT_TO_RIGHT"
+#             table_attributes = {"style" : "width:100%"}
+#             html = convert(json_object, build_direction=build_direction, table_attributes=table_attributes)
+#             print(html)
+#         return html
+#     return jsonify(output_data)# Returns the scraped data after being running for 20 seconds.
+  
+  
+@app.route("/scrape")
+def scrape():
+
+    scrape_with_crochet(baseURL=baseURL) # Passing that URL to our Scraping Function
+
+    time.sleep(20) # Pause the function while the scrapy spider is running
+    print(baseURL)
+    print(output_data)
+    return jsonify(output_data) # Returns the scraped data after being running for 20 seconds.
   
 @crochet.run_in_reactor
 def scrape_with_crochet(baseURL):

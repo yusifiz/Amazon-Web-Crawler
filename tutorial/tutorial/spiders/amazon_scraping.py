@@ -83,10 +83,10 @@ class ReviewspiderSpider(scrapy.Spider):
       
             yield MyItem(names=name, reviewerLink = reviewLink, reviewTitles=title, reviewBody=Review, verifiedPurchase=Verified, postDate=date, starRating=rating, helpful=helpful_count, nextPage=next_urls)
             
-#             next_page = response.css('.a-last > a::attr(href)').extract_first()
-#   # Checking if next page is not none then loop back in the same function with the next page URL.
-#             if next_page is not None:
-#                 yield response.follow("https://www.amazon.com"+next_page, callback=self.parse_page)
+            next_page = response.css('.a-last > a::attr(href)').extract_first()
+  # Checking if next page is not none then loop back in the same function with the next page URL.
+            if next_page is not None:
+                yield response.follow("https://www.amazon.com"+next_page, callback=self.parse_page)
 
 
 #         @app.route("/",methods=["GET","POST"])
