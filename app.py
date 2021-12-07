@@ -64,7 +64,7 @@ def scrape():
 
     time.sleep(20) # Pause the function while the scrapy spider is running
     print(baseURL)
-    print(output_data)
+    # print(output_data)
     return jsonify(output_data) # Returns the scraped data after being running for 20 seconds.
   
 @crochet.run_in_reactor
